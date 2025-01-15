@@ -1,0 +1,21 @@
+server:
+  port: 8081   
+  
+spring:
+  application:
+     name: microservicio-usuariosapp
+  data:
+    mongodb:
+       username: mongodb
+       password: mongodb
+       database: usuarios
+       port: 27017
+       host: localhost
+       
+# Config de el servidor  
+eureka: 
+  client:
+    serviceUrl:
+      # Direccion a la que se conecta el microservicio con eureka
+      defaultZone: http://localhost:8761/eureka   
+      register-with-eureka: true  
