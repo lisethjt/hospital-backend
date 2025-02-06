@@ -27,7 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 )
         );
         
-        String token = "Bearer " + JwtHelper.generateToken(loginRequest.getEmail());        
+        String token = JwtHelper.generateToken(loginRequest.getEmail());        
 		return LoginResponse.builder()
 				.accessToken(token)				
 				.build();
