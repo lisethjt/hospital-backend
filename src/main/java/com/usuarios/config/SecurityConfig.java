@@ -13,15 +13,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.usuarios.infrastructure.service.auth.JWTAuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
 	private UserDetailsService userDetailsService;
+	private JWTAuthorizationFilter jwtAuthorizationFilter;
 
-	public SecurityConfig(UserDetailsService userDetailsService) {
+	public SecurityConfig(UserDetailsService userDetailsService, JWTAuthorizationFilter jwtAuthorizationFilter) {
 		this.userDetailsService = userDetailsService;
+		this.jwtAuthorizationFilter = jwtAuthorizationFilter;
 	}
 
 	@Bean
@@ -45,11 +50,12 @@ public class SecurityConfig {
 //          Set permissions on endpoints
 				.authorizeHttpRequests(auth -> auth
 //              our public endpoints
-						.requestMatchers(HttpMethod.POST, "/users/add").permitAll()
+						.requestMatchers(HttpMethod.POST, "/users/add").authenticated()
 						.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-						.requestMatchers(HttpMethod.GET, "/users/all").permitAll()
+						.requestMatchers(HttpMethod.GET, "/users/all").authenticated()
 //              our private endpoints
 						.anyRequest().authenticated())
+				.addFilterBefore(jwtAuthorizationFilter,UsernamePasswordAuthenticationFilter.class)
 				.authenticationManager(authenticationManager).build();
 	}
 
