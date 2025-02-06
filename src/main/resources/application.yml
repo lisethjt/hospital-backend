@@ -4,14 +4,18 @@ server:
 spring:
   application:
      name: microservicio-usuariosapp
-  data:
-    mongodb:
-       username: mongodb
-       password: mongodb
-       database: usuarios
-       port: 27017
-       host: localhost
-       
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_hospital
+    username: root
+    password: tandito    
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
 # Config de el servidor  
 eureka: 
   client:
