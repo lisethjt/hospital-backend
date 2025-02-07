@@ -11,6 +11,7 @@ import com.usuarios.infrastructure.payload.MessageResponse;
 import com.usuarios.infrastructure.payload.UserListResponse;
 import com.usuarios.infrastructure.payload.UserRequest;
 import com.usuarios.infrastructure.payload.UserResponse;
+import com.usuarios.infrastructure.service.auth.JwtHelper;
 
 @Service
 public class UserFacadeImpl implements UserFacade {
@@ -31,13 +32,14 @@ public class UserFacadeImpl implements UserFacade {
 		User userObj= userService.add(UserDtoMapper.toUser(user));
 		if(userObj == null) {
 			messageResponse.setCode("400");
-			messageResponse.setMessage("Error");
+			messageResponse.setMessage("El usuario no pudo ser registrado");
 			userResponse.setMessage(messageResponse);
 			return userResponse;
 		}
 		
-		userResponse.setMessage(messageResponse);
 		userResponse.setUser(UserDtoMapper.toUserDto(userObj));
+		userResponse.setMessage(messageResponse);
+		userResponse.setToken(JwtHelper.generateToken(user.getEmail()));
 		return userResponse;
 	}
 

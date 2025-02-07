@@ -17,7 +17,7 @@ import com.usuarios.infrastructure.payload.UserRequest;
 import com.usuarios.infrastructure.payload.UserResponse;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200/**")
 @RequestMapping(value = "users")
 public class UserController {
 

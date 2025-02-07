@@ -26,7 +26,7 @@ public class UserRepositoryPortImpl implements UserRepositoryPort {
 	@Override
 	public User add(User user) {
 		User userObj = null;
-		Optional<UserEntity> userList = this.userRespository.findByName(user.getName());
+		Optional<UserEntity> userList = this.userRespository.findByEmail(user.getEmail());
 		if(userList.isPresent()) {
 			userList.orElseThrow(
 				() -> new UserException(HttpStatus.BAD_REQUEST, UserConstant.USER_FOUND_MESSAGE_ERROR ));

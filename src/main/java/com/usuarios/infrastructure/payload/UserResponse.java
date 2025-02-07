@@ -16,5 +16,6 @@ import lombok.Setter;
 public class UserResponse {
 
 	private UserDto user;
+	private String token;
 	private MessageResponse message;
 }
